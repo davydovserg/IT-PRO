@@ -1,0 +1,773 @@
+<title>АйТи Про</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+/* Layout: деловой «бумажный» стиль — светлая основа, глубокий синий, латунь как знак статуса; колонка 1160px, тонкие линейки вместо карточек. Намеренно одна светлая тема: сайт и сертификат — «документ». */
+:root{
+  color-scheme:light;
+  --paper:#fafaf8; --white:#ffffff; --ink:#0b1f3a; --ink2:#2c3a52; --muted:#667085; --line:#e3e5ea; --line2:#cfd4dc;
+  --brass:#9a7b3f; --brass-soft:#f4efe4; --navy:#0b1f3a; --navy2:#13294a; --on-navy:#eef2f8; --on-navy-muted:#a7b3c7;
+  --good:#1d6b45; --good-bg:#e6f2eb; --warn:#8a5a00; --warn-bg:#fbf1dc; --bad:#a6331f; --bad-bg:#f9e7e3;
+  --f-display:"Cormorant Garamond", "PT Serif", Georgia, serif;
+  --f-body:"Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:16px/1.6 var(--f-body)}
+.in{max-width:1160px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+section{padding-block:88px}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font:600 clamp(40px,6vw,76px)/1.02 var(--f-display);letter-spacing:-.01em}
+h2{font:600 clamp(32px,4.2vw,50px)/1.08 var(--f-display);letter-spacing:-.005em}
+h3{font:600 18px/1.3 var(--f-body)}
+p{margin:0}
+.eyebrow{font:600 12px var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--brass)}
+.lead{font-size:clamp(17px,1.8vw,19px);color:var(--ink2);max-width:60ch}
+.muted{color:var(--muted)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+a{color:var(--ink);text-underline-offset:3px;text-decoration-color:var(--line2)}
+a:hover{text-decoration-color:var(--brass)}
+button{font:500 15px var(--f-body);cursor:pointer;border-radius:4px;border:1px solid var(--line2);background:var(--white);color:var(--ink);padding:13px 22px;transition:background .15s,border-color .15s}
+button:hover{border-color:var(--ink)}
+button.primary{background:var(--navy);border-color:var(--navy);color:var(--on-navy)}
+button.primary:hover{background:var(--navy2)}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+input,select{font:inherit;color:var(--ink);background:var(--white);border:1px solid var(--line2);border-radius:4px;padding:12px 14px;width:100%}
+input[type=range]{padding:0;border:0;accent-color:var(--navy)}
+label,.lab{font-size:13px;font-weight:500;color:var(--ink2)}
+.f{display:grid;gap:6px;min-width:0}
+.head{display:grid;gap:16px;max-width:760px;margin-bottom:48px}
+
+.util{background:var(--navy);color:var(--on-navy-muted);font-size:13px}
+.util .in{display:flex;gap:28px;padding-block:9px;flex-wrap:wrap}
+.util span{display:flex;align-items:center;gap:8px}
+.util span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--brass)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--white);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--white)}
+header .in{display:flex;align-items:center;gap:28px;padding-block:16px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo .mk{width:38px;height:38px;border:1px solid var(--ink);display:grid;place-items:center;font:700 18px var(--f-display);letter-spacing:.02em}
+.logo .nm{display:grid;line-height:1.1}
+.logo .nm b{font:700 22px var(--f-display);letter-spacing:.01em}
+.logo .nm small{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+header nav{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+header nav a{text-decoration:none;color:var(--ink2);font-size:15px;padding:8px 12px}
+header nav a:hover{color:var(--ink)}
+header .cta{padding:10px 18px}
+@media (max-width:900px){header nav{display:none}header .cta{margin-left:auto}}
+
+.hero{padding-block:96px 80px;border-bottom:1px solid var(--line)}
+.hero .grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:64px;align-items:start}
+@media (max-width:940px){.hero .grid{grid-template-columns:minmax(0,1fr)}}
+.hero h1 em{font-style:italic;color:var(--brass)}
+.hero .lead{margin-top:28px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+.pledges{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:56px;border-top:1px solid var(--line)}
+.pledges div{padding:18px 18px 0 0;display:grid;gap:4px;align-content:start}
+.pledges div+div{padding-left:18px;border-left:1px solid var(--line)}
+.pledges b{font:600 15px var(--f-body)}
+.pledges span{font-size:14px;color:var(--muted)}
+@media (max-width:640px){.pledges{grid-template-columns:minmax(0,1fr)}.pledges div+div{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:14px;margin-top:14px}}
+.verify{background:var(--white);border:1px solid var(--line);padding:28px;display:grid;gap:16px;box-shadow:0 24px 48px -32px rgba(11,31,58,.25)}
+.verify h3{font:600 28px var(--f-display)}
+.verify .row{display:flex;gap:8px}
+.verify .row input{font-family:var(--f-mono);text-transform:uppercase;min-width:0}
+.vres{border-top:1px solid var(--line);padding-top:16px;display:grid;gap:8px;font-size:14px}
+.vres .ok{color:var(--good);font-weight:600}
+.vres .no{color:var(--bad);font-weight:600}
+.vres dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;margin:0}
+.vres dt{color:var(--muted)}
+.vres dd{margin:0;font-weight:500}
+
+.princ{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--ink)}
+.princ div{padding:28px 28px 0 0;display:grid;gap:10px;align-content:start}
+.princ div+div{padding-left:28px;border-left:1px solid var(--line)}
+.princ .n{font:600 44px/1 var(--f-display);color:var(--brass)}
+.princ p{color:var(--ink2);font-size:15px}
+@media (max-width:820px){.princ{grid-template-columns:minmax(0,1fr)}.princ div+div{border-left:0;padding-left:0;border-top:1px solid var(--line);margin-top:24px}}
+
+.method{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:820px){.method{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--paper);border:1px solid var(--line);padding:28px;display:grid;gap:12px;align-content:start}
+.stage .k{font:600 12px var(--f-mono);color:var(--brass);letter-spacing:.08em}
+.stage ul{margin:0;padding-left:18px;display:grid;gap:6px;color:var(--ink2);font-size:15px}
+.stage .w{margin-top:6px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+
+.certwrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:48px;align-items:start}
+@media (max-width:1000px){.certwrap{grid-template-columns:minmax(0,1fr)}}
+.cert{position:relative;background:#fffdf8;color:#0b1f3a;aspect-ratio:297/210;width:100%;container-type:inline-size;box-shadow:0 2px 4px rgba(11,31,58,.06),0 30px 60px -30px rgba(11,31,58,.35);overflow:hidden}
+.cert .gu{position:absolute;inset:0;width:100%;height:100%}
+.cert .frame{position:absolute;inset:2.6cqw;border:.25cqw solid #9a7b3f;outline:.1cqw solid #9a7b3f;outline-offset:-.8cqw}
+.cert .body{position:absolute;inset:5.2cqw 6cqw;display:grid;grid-template-rows:auto auto 1fr auto;gap:1.2cqw}
+.cert .t1{display:flex;justify-content:space-between;align-items:center;font:600 1.1cqw var(--f-body);letter-spacing:.3em;text-transform:uppercase;color:#667085}
+.cert .t1 .brand{display:flex;align-items:center;gap:1cqw;color:#0b1f3a;letter-spacing:.2em}
+.cert .t1 .brand i{font:700 1.7cqw var(--f-display);font-style:normal;border:.12cqw solid #0b1f3a;width:3.2cqw;height:3.2cqw;display:grid;place-items:center;letter-spacing:0}
+.cert .ti{text-align:center;display:grid;gap:.4cqw}
+.cert .ti b{font:700 5.2cqw/1 var(--f-display);letter-spacing:.14em}
+.cert .ti span{font:500 1.6cqw var(--f-display);font-style:italic;color:#2c3a52}
+.cert .mid{text-align:center;display:grid;gap:.8cqw;align-content:center}
+.cert .mid .s{font:400 1.3cqw var(--f-body);color:#667085}
+.cert .mid .who{font:600 4.2cqw/1.05 var(--f-display);overflow-wrap:anywhere}
+.cert .mid .rule{width:40%;height:.1cqw;background:#9a7b3f;margin:0 auto}
+.cert .mid .lv{display:flex;justify-content:center;align-items:baseline;gap:1.6cqw;flex-wrap:wrap}
+.cert .mid .lv b{font:700 3.3cqw var(--f-display);color:#9a7b3f;letter-spacing:.04em}
+.cert .mid .lv span{font:500 1.5cqw var(--f-body)}
+.cert .topics{display:flex;justify-content:center;gap:2.4cqw;font:500 1.1cqw var(--f-body);color:#2c3a52;flex-wrap:wrap}
+.cert .topics em{font:600 1.1cqw var(--f-mono);font-style:normal;color:#0b1f3a}
+.cert .foot{display:grid;grid-template-columns:1fr 1fr auto auto;gap:3cqw;align-items:end}
+.cert .sig{display:grid;gap:.5cqw;font:400 1cqw var(--f-body);color:#667085}
+.cert .sig i{display:block;height:3cqw;border-bottom:.1cqw solid #0b1f3a;position:relative}
+.cert .sig i svg{position:absolute;left:8%;bottom:.2cqw;width:70%;height:2.8cqw}
+.cert .reg{display:grid;gap:.3cqw;font:400 1cqw var(--f-body);color:#667085;text-align:right}
+.cert .reg b{font:600 1.35cqw var(--f-mono);color:#0b1f3a}
+.cert .qr{width:8.5cqw;height:8.5cqw;background:#fff;padding:.5cqw;border:.1cqw solid #cfd4dc}
+.cert .qr svg{width:100%;height:100%;display:block}
+.cert .seal{position:absolute;right:23cqw;bottom:4.2cqw;width:11cqw;height:11cqw;opacity:.9}
+.cert .wm{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.cert .wm span{font:700 13cqw var(--f-display);letter-spacing:.2em;color:rgba(154,123,63,.08);transform:rotate(-18deg)}
+.certnote{display:grid;gap:20px}
+.certnote dl{margin:0;display:grid;gap:16px}
+.certnote dt{font-weight:600}
+.certnote dd{margin:2px 0 0;color:var(--ink2);font-size:15px}
+.scrollx{overflow-x:auto}
+
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:56px;align-items:start}
+@media (max-width:940px){.split{grid-template-columns:minmax(0,1fr)}}
+.stack{display:grid;gap:18px;align-content:start}
+.dirs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.dir{display:grid;gap:2px;text-align:left;padding:14px 16px}
+.dir b{font:600 16px var(--f-body)}
+.dir span{font-size:13px;color:var(--muted)}
+.dir[aria-pressed="true"]{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.panel{background:var(--white);border:1px solid var(--line);padding:28px;display:grid;gap:18px;min-width:0}
+#test .panel{background:var(--paper)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;color:var(--muted)}
+.progress{height:2px;background:var(--line)}
+.progress i{display:block;height:100%;background:var(--brass);transition:width .3s}
+.timer{font:600 13px var(--f-mono);padding:3px 8px;border:1px solid var(--line2);border-radius:3px}
+.timer.low{color:var(--bad);border-color:var(--bad)}
+.qtext{font:500 19px/1.45 var(--f-body)}
+pre.code{font:13px/1.6 var(--f-mono);background:#f1f3f6;border:1px solid var(--line);padding:12px 14px;margin:0;overflow-x:auto;white-space:pre}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:13px 14px}
+.opt .k{font:600 12px var(--f-mono);color:var(--muted);border:1px solid var(--line2);border-radius:3px;min-width:24px;height:24px;display:grid;place-items:center}
+.opt[aria-pressed="true"]{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.opt[aria-pressed="true"] .k{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.grow{flex:1}
+.result{display:grid;gap:16px;min-width:0}
+.score{display:flex;gap:18px;align-items:baseline;flex-wrap:wrap}
+.score b{font:600 64px/1 var(--f-display)}
+.pill{font:600 12px var(--f-body);letter-spacing:.04em;padding:4px 10px;border-radius:3px}
+.pill.good{background:var(--good-bg);color:var(--good)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.review{display:grid;gap:8px}
+.review div{font-size:14px;padding:12px 14px;border:1px solid var(--line);background:var(--white);display:grid;gap:4px;min-width:0}
+.review .ok{border-left:3px solid var(--good)}
+.review .no{border-left:3px solid var(--bad)}
+
+.band{background:var(--navy);color:var(--on-navy)}
+.band .muted,.band .lead{color:var(--on-navy-muted)}
+.band label{color:var(--on-navy-muted)}
+.band select,.band input{background:var(--navy2);border-color:#2b4268;color:var(--on-navy)}
+.filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:end}
+@media (max-width:860px){.filters{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.filters{grid-template-columns:minmax(0,1fr)}}
+.cands{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:24px}
+@media (max-width:940px){.cands{grid-template-columns:minmax(0,1fr)}}
+.cand{border:1px solid #2b4268;padding:22px;display:grid;gap:14px;background:var(--navy2)}
+.cand .id{font:600 12px var(--f-mono);color:var(--on-navy-muted);display:flex;justify-content:space-between;gap:8px}
+.cand .lv{font:600 28px var(--f-display)}
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:120px minmax(0,1fr) 36px;gap:10px;align-items:center;font-size:13px}
+.bar i{height:4px;background:#2b4268;position:relative}
+.bar i b{position:absolute;inset:0 auto 0 0;background:var(--brass)}
+.bar em{font:12px var(--f-mono);font-style:normal;text-align:right}
+.cand .fee{border-top:1px solid #2b4268;padding-top:12px;display:grid;gap:2px;font-size:13px;color:var(--on-navy-muted)}
+.cand .fee b{font:600 15px var(--f-body);color:var(--on-navy)}
+.cand button{background:transparent;color:var(--on-navy);border-color:#3a557f}
+.cand button:hover{border-color:var(--on-navy)}
+.cand .pill.good{background:#173d2c;color:#8fd8b0}
+.cand .pill.warn{background:#3d3015;color:#f0c46a}
+.bandnote{font-size:13px;color:var(--on-navy-muted);margin-top:16px}
+
+.pricing{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px;align-items:start}
+@media (max-width:940px){.pricing{grid-template-columns:minmax(0,1fr)}}
+.calcbox{background:var(--white);border:1px solid var(--line);padding:28px;display:grid;gap:22px}
+.calcbox .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:520px){.calcbox .grid2{grid-template-columns:minmax(0,1fr)}}
+.months{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;height:64px}
+.months i{display:block;background:var(--line)}
+.months i.on{background:var(--navy)}
+.months i.stop{background:repeating-linear-gradient(45deg,var(--line) 0 3px,transparent 3px 7px)}
+.mlab{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;font:11px var(--f-mono);color:var(--muted);text-align:center;margin-top:6px}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line)}
+.compare div{padding:18px;display:grid;gap:4px;align-content:start}
+.compare div+div{border-left:1px solid var(--line)}
+.compare .us{background:var(--brass-soft)}
+.compare b{font:600 32px/1.1 var(--f-display)}
+.compare span{font-size:13px;color:var(--muted)}
+@media (max-width:520px){.compare{grid-template-columns:minmax(0,1fr)}.compare div+div{border-left:0;border-top:1px solid var(--line)}}
+table.tariffs{width:100%;border-collapse:collapse;font-size:15px}
+table.tariffs th,table.tariffs td{text-align:left;padding:16px 12px 16px 0;border-bottom:1px solid var(--line);vertical-align:top}
+table.tariffs th{font:600 12px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--ink)}
+table.tariffs td:last-child{text-align:right;white-space:nowrap;font-weight:600;padding-right:0}
+table.tariffs td small{display:block;color:var(--muted);font-size:13px;font-weight:400}
+.src{font-size:13px;color:var(--muted);margin-top:16px}
+
+.calc3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:700px){.calc3{grid-template-columns:minmax(0,1fr)}}
+.gauge{position:relative;height:58px}
+.gauge .track{position:absolute;left:0;right:0;top:22px;height:6px;background:var(--line)}
+.gauge .fair{position:absolute;top:22px;height:6px;background:var(--good)}
+.gauge .pin{position:absolute;top:10px;width:2px;height:30px;background:var(--ink)}
+.gauge .lbl{position:absolute;top:44px;font:11px var(--f-mono);color:var(--muted);transform:translateX(-50%);white-space:nowrap}
+.verdictbox{padding:18px 20px;display:grid;gap:6px;border-left:3px solid currentColor}
+.verdictbox b{font:600 17px var(--f-body)}
+.verdictbox.good{background:var(--good-bg);color:var(--good)}
+.verdictbox.warn{background:var(--warn-bg);color:var(--warn)}
+.verdictbox.bad{background:var(--bad-bg);color:var(--bad)}
+.verdictbox p{color:var(--ink);font-size:14px}
+.steps{display:grid;margin:0;padding:0;counter-reset:s}
+.steps li{list-style:none;display:grid;grid-template-columns:48px minmax(0,1fr);gap:12px;padding:16px 0;border-top:1px solid var(--line)}
+.steps li::before{counter-increment:s;content:counter(s,upper-roman) ".";font:600 20px var(--f-display);color:var(--brass)}
+
+.docs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--ink)}
+.docs>div{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;padding:20px 20px 20px 0;border-bottom:1px solid var(--line)}
+.docs>div:nth-child(even){padding-left:20px;border-left:1px solid var(--line)}
+.docs svg{width:28px;height:34px}
+.docs b{font-weight:600}
+.docs span{display:block;font-size:14px;color:var(--muted)}
+@media (max-width:760px){.docs{grid-template-columns:minmax(0,1fr)}.docs>div:nth-child(even){padding-left:0;border-left:0}}
+
+footer{background:var(--navy);color:var(--on-navy-muted);padding-block:48px;font-size:14px}
+footer .in{display:grid;gap:12px}
+footer b{color:var(--on-navy)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="util"><div class="in">
+  <span>Работаем по договору с юрлицом</span>
+  <span>Оплата помесячно, только пока сотрудник работает</span>
+  <span>Данные хранятся в России, 152-ФЗ</span>
+</div></div>
+<header><div class="in">
+  <a class="logo" href="#top" aria-label="АйТи Про"><span class="mk">АП</span><span class="nm"><b>АйТи Про</b><small>Независимая оценка IT-специалистов</small></span></a>
+  <nav aria-label="Разделы">
+    <a href="#method">Методика</a>
+    <a href="#certificate">Сертификат</a>
+    <a href="#companies">Компаниям</a>
+    <a href="#pricing">Стоимость</a>
+    <a href="#audit">Аудит</a>
+  </nav>
+  <button class="primary cta" onclick="document.getElementById('test').scrollIntoView({behavior:'smooth'})">Пройти оценку</button>
+</div></header>
+
+<main>
+<section class="hero" id="top"><div class="in grid">
+  <div>
+    <div class="eyebrow">Только IT · Только проверенные специалисты</div>
+    <h1 style="margin-top:22px">Уровень программиста — <em>измеренный</em>, а&nbsp;не&nbsp;заявленный</h1>
+    <p class="lead">Оцениваем разработчиков по единой методике, выдаём сертификат с номером в открытом реестре и подбираем компаниям специалистов с подтверждённым уровнем. Подбор оплачивается помесячно и только пока сотрудник у вас работает.</p>
+    <div class="ctas">
+      <button class="primary" onclick="document.getElementById('companies').scrollIntoView({behavior:'smooth'})">Подобрать специалиста</button>
+      <button onclick="document.getElementById('test').scrollIntoView({behavior:'smooth'})">Я программист</button>
+    </div>
+    <div class="pledges">
+      <div><b>Без предоплаты</b><span>Первый платёж — по итогам первого месяца работы сотрудника</span></div>
+      <div><b>Риск на нас</b><span>Сотрудник ушёл — платежи прекращаются в тот же месяц</span></div>
+      <div><b>Открытый реестр</b><span>Любой сертификат проверяется по номеру за секунды</span></div>
+    </div>
+  </div>
+  <aside class="verify" aria-labelledby="vTitle">
+    <div class="eyebrow">Реестр сертификатов</div>
+    <h3 id="vTitle">Проверить подлинность</h3>
+    <p class="muted" style="font-size:14px">Введите номер с сертификата или отсканируйте QR-код на нём.</p>
+    <div class="row"><input id="vNum" placeholder="ITP-BE-2026-04817" aria-label="Номер сертификата" maxlength="24"><button class="primary" id="vBtn">Проверить</button></div>
+    <div class="vres" id="vRes"><span class="muted">Попробуйте номер образца: <a href="#" id="vSample" class="mono">ITP-BE-2026-04817</a></span></div>
+  </aside>
+</div></section>
+
+<section id="principles"><div class="in">
+  <div class="head"><div class="eyebrow">Принципы</div><h2>Почему нашей оценке доверяют обе стороны</h2></div>
+  <div class="princ">
+    <div><span class="n">I</span><h3>Независимость</h3><p>Программист не платит за результат и не может «купить» уровень. Компания платит за подбор, но не влияет на оценку кандидата.</p></div>
+    <div><span class="n">II</span><h3>Измеримость</h3><p>Уровень считается по баллам: 120 вопросов в банке, три уровня сложности, вес сложного вопроса втрое выше базового. Никаких «впечатлений от собеседования».</p></div>
+    <div><span class="n">III</span><h3>Конфиденциальность</h3><p>Контакты программиста скрыты, пока он сам не примет приглашение. Аудит сотрудника — только по договору с работодателем и с ведома сотрудника.</p></div>
+  </div>
+</div></section>
+
+<section id="method" style="background:var(--white);border-block:1px solid var(--line)"><div class="in">
+  <div class="head"><div class="eyebrow">Методика оценки · редакция 1.0</div><h2>Три этапа, которые нельзя пройти наугад</h2><p class="lead">Каждый этап отсекает свой способ «натянуть» результат: заученные ответы, списывание и красивые слова без опыта.</p></div>
+  <div class="method">
+    <div class="stage"><span class="k">ЭТАП I · ТЕОРИЯ</span><h3>Тест по направлению</h3><ul><li>Личный набор вопросов: базовые, средние и сложные</li><li>Минута на вопрос, фиксация ухода со вкладки</li><li>Вопросы на реальных ситуациях, а не определениях</li></ul><div class="w">Вес в итоговой оценке: 40%</div></div>
+    <div class="stage"><span class="k">ЭТАП II · ПРАКТИКА</span><h3>Задача с автопроверкой</h3><ul><li>2–3 задачи в онлайн-редакторе</li><li>Данные в условии уникальны для каждого</li><li>Код проверяют скрытые тесты и эксперт</li></ul><div class="w">Вес в итоговой оценке: 35%</div></div>
+    <div class="stage"><span class="k">ЭТАП III · ИНТЕРВЬЮ</span><h3>Разговор с экспертом</h3><ul><li>40 минут по видео, для Senior и Lead</li><li>Кандидат объясняет свои решения</li><li>Эксперт — практикующий инженер уровня Lead</li></ul><div class="w">Вес в итоговой оценке: 25%</div></div>
+  </div>
+</div></section>
+
+<section id="certificate"><div class="in">
+  <div class="head"><div class="eyebrow">Документ</div><h2>Так выглядит сертификат</h2><p class="lead">Защитная сетка, номер в реестре, QR-код для проверки и подписи экспертов. Работодатель видит не только уровень, но и баллы по каждой теме.</p></div>
+  <div class="certwrap">
+    <div id="certSample"></div>
+    <div class="certnote">
+      <dl>
+        <div><dt>Номер в реестре</dt><dd>Формат ITP-[направление]-[год]-[номер]. По нему открывается запись с уровнем, датами и баллами.</dd></div>
+        <div><dt>QR-код</dt><dd>Ведёт на страницу проверки. Поддельный сертификат не найдётся в реестре.</dd></div>
+        <div><dt>Срок действия — 2 года</dt><dd>Технологии меняются, поэтому уровень нужно подтверждать заново.</dd></div>
+        <div><dt>Баллы по темам</dt><dd>Видно, в чём специалист сильнее всего: например, базы данных или безопасность.</dd></div>
+      </dl>
+      <p class="muted" style="font-size:13px">Это образец. Сертификат — негосударственный документ о прохождении оценки и не является свидетельством о квалификации по 238-ФЗ.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="test" style="background:var(--white);border-block:1px solid var(--line)"><div class="in split">
+  <div class="stack">
+    <div class="eyebrow">Для программистов · бесплатно</div>
+    <h2>Пройдите оценку и получите сертификат</h2>
+    <p class="muted">Демо-версия первого этапа: 12 вопросов из банка в 30 по каждому направлению — 4 базовых, 4 средних, 4 сложных. Минута на вопрос.</p>
+    <div class="f"><label for="tName">Фамилия и имя для сертификата</label><input id="tName" maxlength="60" placeholder="Иванов Иван" autocomplete="name"></div>
+    <div class="f"><span class="lab">Направление</span><div class="dirs" id="dirs"></div></div>
+    <button class="primary" id="startBtn">Начать оценку</button>
+  </div>
+  <div class="panel" id="testPanel" aria-live="polite"></div>
+</div></section>
+
+<section class="band" id="companies"><div class="in">
+  <div class="head"><div class="eyebrow">Для компаний</div><h2>Подбор специалистов с подтверждённым уровнем</h2><p class="lead">Выберите сферу и уровень. Вы видите результаты оценки, а не резюме. Контакты открываются после согласия кандидата.</p></div>
+  <div class="filters">
+    <div class="f"><label for="cInd">Сфера бизнеса</label><select id="cInd"><option>Банк и финансы</option><option>Розница и e-commerce</option><option>Производство</option><option>Строительство и девелопмент</option><option>Логистика</option><option>Медицина</option></select></div>
+    <div class="f"><label for="cDir">Направление</label><select id="cDir"></select></div>
+    <div class="f"><label for="cLvl">Уровень</label><select id="cLvl"><option>Junior</option><option>Middle</option><option selected>Senior</option><option>Lead</option></select></div>
+    <div class="f"><label for="cBudget">Бюджет на оклад, ₽/мес</label><input id="cBudget" type="number" min="50000" step="10000" value="330000"></div>
+  </div>
+  <div class="cands" id="cands"></div>
+  <p class="bandnote">Карточки — примеры для прототипа, не реальные люди. Ожидания по окладу построены на медианах Хабр Карьеры за первое полугодие 2026 года.</p>
+</div></section>
+
+<section id="pricing"><div class="in">
+  <div class="head"><div class="eyebrow">Стоимость</div><h2>Платите помесячно и только пока сотрудник работает</h2><p class="lead">Агентства обычно берут 12–22% годового дохода сразу, а гарантия длится 1–3 месяца. У нас — 18% оклада в месяц в течение первого года. Сотрудник ушёл — платежи прекращаются.</p></div>
+  <div class="pricing">
+    <div class="calcbox">
+      <h3>Расчёт для вашей вакансии</h3>
+      <div class="grid2">
+        <div class="f"><label for="pSal">Оклад сотрудника, ₽/мес</label><input id="pSal" type="number" min="30000" step="10000" value="300000"></div>
+        <div class="f"><label for="pMon">Сотрудник проработал, мес: <b id="pMonV" class="num">12</b></label><input id="pMon" type="range" min="1" max="12" value="12"></div>
+      </div>
+      <div>
+        <div class="months" id="pBars" aria-hidden="true"></div>
+        <div class="mlab"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>
+      </div>
+      <div class="row" style="justify-content:space-between"><span class="muted">Ежемесячный платёж</span><b class="num" id="pMonthly" style="font-size:20px"></b></div>
+      <div class="compare">
+        <div class="us"><span>АйТи Про, всего за этот срок</span><b class="num" id="pOurs"></b><span id="pOursNote"></span></div>
+        <div><span>Агентство, 18% годового сразу</span><b class="num" id="pThem"></b><span id="pThemNote"></span></div>
+      </div>
+    </div>
+    <div>
+      <table class="tariffs">
+        <thead><tr><th>Услуга</th><th style="text-align:right">Цена</th></tr></thead>
+        <tbody>
+          <tr><td>Подбор специалиста<small>Шорт-лист за 5 рабочих дней. Платежи с первого месяца работы, 12 месяцев</small></td><td>18% оклада / мес</td></tr>
+          <tr><td>Оценка вашего кандидата<small>Наш тест и отчёт по кандидату, которого вы нашли сами</small></td><td>4 900 ₽</td></tr>
+          <tr><td>Оценка с интервью эксперта<small>Для Senior и Lead: тест, задача, 40 минут с экспертом</small></td><td>14 900 ₽</td></tr>
+          <tr><td>Аудит сотрудника<small>Разбор работы за 3–6 месяцев, интервью, отчёт</small></td><td>от 120 000 ₽</td></tr>
+          <tr><td>Аудит команды до 10 человек<small>Включает рекомендации по структуре и окладам</small></td><td>от 690 000 ₽</td></tr>
+          <tr><td>Программисту: оценка и сертификат<small>Интервью с экспертом для Senior/Lead — по желанию</small></td><td>0 ₽</td></tr>
+        </tbody>
+      </table>
+      <p class="src">Рынок: 12–22% годового дохода за подбор, гарантия 1–3 месяца — по открытым прайсам IT-агентств (<a href="https://retailpersonal.ru/blog/luchshiye-kadrovyye-it-agentstva/" target="_blank" rel="noopener">обзор агентств</a>, <a href="https://staffberry.ru/tpost/skolko-stoit-podbor-personala-cherez-agentstvo" target="_blank" rel="noopener">Staffberry</a>). Оклады — <a href="https://habr.com/ru/specials/1060148/" target="_blank" rel="noopener">Хабр Карьера, 1-е полугодие 2026</a>.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="audit" style="background:var(--white);border-block:1px solid var(--line)"><div class="in split">
+  <div class="stack">
+    <div class="eyebrow">Аудит сотрудника</div>
+    <h2>Соответствует ли оклад уровню</h2>
+    <p class="muted">Эксперт по договору и с ведома сотрудника изучает его работу и проводит оценку. Через 5–10 рабочих дней — отчёт с фактами и рыночной вилкой.</p>
+    <ol class="steps">
+      <li><div><b>Договор и NDA.</b> <span class="muted">Сотрудник письменно уведомлён и даёт согласие на передачу данных.</span></div></li>
+      <li><div><b>Разбор работы.</b> <span class="muted">Коммиты, код-ревью, задачи в трекере, сроки — в вашей инфраструктуре.</span></div></li>
+      <li><div><b>Оценка.</b> <span class="muted">Тот же тест и интервью, что на платформе.</span></div></li>
+      <li><div><b>Отчёт.</b> <span class="muted">Уровень, сильные стороны, риски, сравнение оклада с рынком, план развития.</span></div></li>
+    </ol>
+  </div>
+  <div class="panel">
+    <h3>Предварительная прикидка</h3>
+    <div class="calc3">
+      <div class="f"><label for="aDir">Направление</label><select id="aDir"></select></div>
+      <div class="f"><label for="aLvl">Уровень по оценке</label><select id="aLvl"><option>Junior</option><option selected>Middle</option><option>Senior</option><option>Lead</option></select></div>
+      <div class="f"><label for="aSal">Оклад сейчас, ₽/мес</label><input id="aSal" type="number" min="30000" step="10000" value="350000"></div>
+    </div>
+    <div>
+      <div class="row muted" style="font-size:13px;justify-content:space-between"><span>Рыночная вилка для уровня</span><b class="mono" id="aRange" style="color:var(--ink)"></b></div>
+      <div class="gauge"><div class="track"></div><div class="fair" id="aFair"></div><div class="pin" id="aPin"></div><div class="lbl" id="aPinLbl"></div></div>
+    </div>
+    <div class="verdictbox" id="aVerdict"></div>
+    <p class="muted" style="font-size:13px">Вилки построены вокруг медиан по грейдам (Junior ≈ 97, Middle ≈ 178, Senior ≈ 304, Lead ≈ 380 тыс. ₽) на основе исследования Хабр Карьеры за 1-е полугодие 2026 года. Поправки на направление — наша оценка.</p>
+  </div>
+</div></section>
+
+<section id="documents"><div class="in">
+  <div class="head"><div class="eyebrow">Документы</div><h2>Всё закреплено в договоре</h2><p class="lead">Образцы документов отправляем до подписания, чтобы ваш юрист проверил их заранее.</p></div>
+  <div class="docs" id="docs"></div>
+</div></section>
+</main>
+
+<footer><div class="in">
+  <div><b>АйТи Про</b> · прототип платформы независимой оценки IT-специалистов</div>
+  <div>Реквизиты юридического лица будут указаны после регистрации. Сертификаты на этой странице — образцы.</div>
+  <div>Персональные данные обрабатываются с отдельного согласия и хранятся на серверах в России. Аудит сотрудников — только по договору с работодателем и с ведома сотрудника.</div>
+</div></footer>
+
+<script>
+/* Банк вопросов: d — сложность (1 базовый, 2 средний, 3 сложный), a — индекс верного ответа в o */
+const Q=(d,t,o,a,e,c)=>({d,t,o,a,e,c});
+const DIRS={
+ be:{name:"Backend",sub:"Go, Java, Python, PHP",code:"BE",q:[
+  Q(1,"Какой код ответа вернуть при успешном создании ресурса через POST?",["200 OK","201 Created","204 No Content","202 Accepted"],1,"201 сообщает, что ресурс создан; адрес обычно отдают в заголовке Location."),
+  Q(1,"Чем PRIMARY KEY отличается от UNIQUE?",["Ничем","PRIMARY KEY не допускает NULL и в таблице может быть только один","UNIQUE работает быстрее","PRIMARY KEY всегда автоинкремент"],1,"UNIQUE-ограничений может быть несколько, и они допускают NULL."),
+  Q(1,"Что возвращает LEFT JOIN?",["Только совпавшие строки обеих таблиц","Все строки левой таблицы и совпадения из правой, иначе NULL","Все строки обеих таблиц","Только строки левой таблицы без пары"],1,"Только совпавшие строки возвращает INNER JOIN."),
+  Q(1,"Какой HTTP-метод по спецификации НЕ является идемпотентным?",["GET","PUT","DELETE","POST"],3,"Повторный POST может создать вторую сущность."),
+  Q(1,"Как правильно хранить пароли пользователей?",["SHA-256 от пароля","Шифровать AES и хранить ключ на сервере","bcrypt или argon2 с солью","MD5 с солью"],2,"Нужна медленная функция хеширования с солью."),
+  Q(1,"Как защититься от SQL-инъекций?",["Экранировать кавычки вручную","Передавать значения параметрами подготовленного запроса","Отправлять данные только через POST","Хранить SQL в отдельном файле"],1,"Параметры не становятся частью текста запроса."),
+  Q(1,"Какой заголовок сообщает серверу формат тела запроса?",["Accept","Authorization","Content-Type","Cache-Control"],2,"Accept говорит, какой формат клиент хочет получить в ответ."),
+  Q(1,"Что вернёт SELECT COUNT(col) FROM t, если в col есть NULL?",["Количество строк, где col не NULL","Количество всех строк","Ошибку","NULL"],0,"Все строки считает COUNT(*)."),
+  Q(1,"Что означает буква A в ACID?",["Доступность","Атомарность: транзакция выполняется целиком или не выполняется","Асинхронность","Аутентификация"],1,"При ошибке все изменения транзакции откатываются."),
+  Q(1,"Запрос пришёл без токена авторизации. Какой код ответа правильный?",["400","401","403","500"],1,"403 — пользователь известен, но прав не хватает."),
+  Q(2,"В PostgreSQL есть составной индекс по (customer_id, created_at). Какой запрос использует его хуже всего?",["WHERE customer_id = 7","WHERE customer_id = 7 AND created_at > now() - interval '1 day'","WHERE created_at > now() - interval '1 day'","WHERE customer_id IN (7, 8) ORDER BY created_at"],2,"Без условия на первый столбец B-tree индекс почти не помогает."),
+  Q(2,"Какая аномалия возможна в PostgreSQL на уровне изоляции READ COMMITTED?",["Грязное чтение","Неповторяющееся чтение","Никакие — это самый строгий уровень","Чтение незафиксированного DELETE"],1,"Два одинаковых SELECT в одной транзакции могут вернуть разные данные."),
+  Q(2,"Сервис выводит 100 заказов, и для каждого ORM отдельно загружает покупателя. Сколько запросов уйдёт в базу?",["1, ленивая загрузка","2, пакетная загрузка","101, проблема N+1","100, шардирование"],2,"Лечится JOIN или eager loading."),
+  Q(2,"В Kafka порядок сообщений гарантируется…",["Во всём топике","Внутри одной партиции","Внутри consumer group","Не гарантируется никогда"],1,"Сообщения с одним ключом попадают в одну партицию и идут по порядку."),
+  Q(2,"Зачем платёжному API заголовок Idempotency-Key?",["Чтобы при повторе запроса сервер не провёл платёж второй раз","Для шифрования тела","Как ключ кеша CDN","Как идентификатор сессии"],0,"Сервер запоминает ключ и на повтор отдаёт сохранённый результат."),
+  Q(2,"Используется cache-aside. Что обычно делают с кешем при обновлении записи?",["Обновляют кеш до записи в БД","Удаляют ключ из кеша после записи в БД","Ничего, дождутся TTL","Очищают весь кеш"],1,"Удаление после записи даёт меньше гонок, чем запись в кеш."),
+  Q(2,"Что верно про JWT?",["Payload зашифрован и недоступен клиенту","Подпись защищает от подмены, но payload может прочитать любой","JWT хранится на сервере в сессии","Его нельзя передавать в заголовке Authorization"],1,"В JWT нельзя класть секреты: это base64, а не шифрование."),
+  Q(2,"EXPLAIN показывает Seq Scan по таблице на 10 млн строк для WHERE email = $1. Что сделать первым?",["Добавить памяти серверу","Создать индекс по email","Выполнить VACUUM FULL","Разбить таблицу на партиции"],1,"Точечный поиск без индекса читает всю таблицу."),
+  Q(2,"Как реализовать оптимистичную блокировку?",["SELECT … FOR UPDATE","Поле version: UPDATE … WHERE id = $1 AND version = $2, ноль обновлённых строк — конфликт","Блокировать всю таблицу","Мьютекс в коде приложения"],1,"FOR UPDATE — это пессимистичная блокировка."),
+  Q(2,"Что позволяет алгоритм rate limiting token bucket?",["Строго N запросов в каждую секунду без всплесков","Кратковременные всплески до размера ведра при ограниченной средней скорости","Ограничивать только по IP","Только очередь запросов без отказов"],1,"Токены копятся, пока клиент молчит."),
+  Q(3,"Как провести операцию через два микросервиса с разными базами без двухфазного коммита?",["Одна транзакция БД на оба сервиса","Сага: шаги с компенсирующими действиями при сбое","Повторять, пока не получится","Блокировка в Redis на всё время операции"],1,"Каждый шаг атомарен локально, отмена — компенсацией."),
+  Q(3,"Как надёжно отправить событие в брокер вместе с изменением данных в БД?",["Отправить в брокер, потом закоммитить","Закоммитить, потом отправить в брокер","Outbox: записать событие в таблицу в той же транзакции и отправлять отдельным процессом","Отправлять из триггера БД по HTTP"],2,"Первые два варианта теряют событие или данные при падении между шагами."),
+  Q(3,"Что случится с горутиной в HTTP-сервере?",["Паника","Горутина зависнет навсегда — утечка","Вернётся нулевое значение","Канал закроется сборщиком мусора"],1,"Никто не пишет в канал и не закрывает его, поэтому чтение блокируется навсегда.","ch := make(chan int)\ngo func() {\n    v := <-ch\n    log.Println(v)\n}()\nreturn // ch больше никто не использует"),
+  Q(3,"Почему LIMIT 20 OFFSET 100000 работает медленно и что делать?",["Не хватает индекса, добавить его","БД читает и отбрасывает 100 000 строк; перейти на keyset: WHERE id > last_id ORDER BY id LIMIT 20","Так работает только MySQL","Увеличить work_mem"],1,"Keyset-пагинация берёт следующую страницу по индексу."),
+  Q(3,"Что по теореме CAP система выбирает при сетевом разделении?",["Между согласованностью и доступностью","Между скоростью и надёжностью","Между масштабируемостью и ценой","Ничего — разделение невозможно"],0,"Без разделения сети можно иметь и то, и другое."),
+  Q(3,"Транзакция на SERIALIZABLE в PostgreSQL упала при коммите с ошибкой сериализации. Что делать?",["Это баг БД","Повторить транзакцию целиком","Понизить уровень изоляции навсегда","Перезапустить сервер"],1,"Повтор — штатная часть работы с SERIALIZABLE."),
+  Q(3,"Как на практике получить эффект exactly-once при обработке сообщений?",["Включить одну настройку в брокере","Доставка at-least-once плюс идемпотентная обработка","Обрабатывать сообщения в одном потоке","Подтверждать сообщение до обработки"],1,"Дубликаты отсекаются по ID сообщения или по бизнес-ключу."),
+  Q(3,"Истёк популярный ключ кеша, и 1000 запросов одновременно пошли в БД. Как этого избежать?",["Увеличить пул соединений","Один запрос пересчитывает значение (single flight), остальные ждут или берут старое","Убрать TTL","Кешировать на клиенте"],1,"Ещё помогает ранний вероятностный пересчёт до истечения TTL."),
+  Q(3,"Почему случайный UUIDv4 как первичный ключ B-tree хуже последовательного?",["UUID нельзя индексировать","Вставки идут в случайные страницы индекса: разрастание индекса и промахи кеша","UUID занимает 1 КБ","UUID не уникален"],1,"Последовательные ключи (UUIDv7, bigint) вставляются в конец индекса."),
+  Q(3,"Две транзакции обновляют строки A и B в разном порядке и ловят deadlock. Как предотвратить?",["Увеличить deadlock_timeout","Всегда блокировать строки в одном и том же порядке","Убрать транзакции","Выполнять обновления в отдельных потоках"],1,"Например, сортировать ID перед UPDATE.")]},
+ fe:{name:"Frontend",sub:"JavaScript, React, CSS",code:"FE",q:[
+  Q(1,"Результат выражения 0.1 + 0.2 === 0.3?",["true","false","undefined","TypeError"],1,"Числа IEEE 754 дают 0.30000000000000004."),
+  Q(1,"Когда выполнится useEffect(fn, [])?",["На каждом рендере","Один раз после первого рендера","До первого рендера","Никогда"],1,"Пустой массив зависимостей — эффект только при монтировании."),
+  Q(1,"Зачем React нужен key у элементов списка?",["Для стилизации","Чтобы сопоставлять элементы между рендерами","Для SEO","Чтобы списки быстрее рендерились на сервере"],1,"Индекс в качестве key ломает состояние при перестановке."),
+  Q(1,"Что верно про const?",["Объект в const нельзя менять","Переменную нельзя переприсвоить, но содержимое объекта менять можно","const работает только для чисел","const — то же, что var"],1,"Неизменяемость объекта даёт Object.freeze, а не const."),
+  Q(1,"Что вернёт typeof null?",["\"null\"","\"undefined\"","\"object\"","\"number\""],2,"Историческая ошибка языка, которую оставили ради совместимости."),
+  Q(1,"Какой тег семантически подходит для основной навигации сайта?",["<div>","<nav>","<menu-bar>","<section>"],1,"Скринридеры дают переходить к <nav> напрямую."),
+  Q(1,"Что вернут 0 == '' и 0 === ''?",["true и false","false и false","true и true","false и true"],0,"== приводит типы, === сравнивает без приведения."),
+  Q(1,"Что делает box-sizing: border-box?",["Добавляет рамку","Включает padding и border в заданную ширину","Убирает margin","Скрывает переполнение"],1,"Без него width задаёт только ширину содержимого."),
+  Q(1,"Как в обработчике submit отменить перезагрузку страницы?",["event.stopPropagation()","event.preventDefault()","return null","form.reset()"],1,"stopPropagation только останавливает всплытие события."),
+  Q(1,"Что делает justify-content: space-between во flex-контейнере?",["Центрирует элементы","Прижимает крайние элементы к краям, остальное место делит между ними","Растягивает элементы","Переносит элементы на новую строку"],1,"Работает вдоль главной оси flex-контейнера."),
+  Q(2,"Что выведет код?",["[1, 2, 3]","[1, NaN, NaN]","[NaN, NaN, NaN]","Ошибку"],1,"map передаёт индекс вторым аргументом, а parseInt принимает его за основание.","console.log([1, 2, 3].map(parseInt))"),
+  Q(2,"В каком порядке появятся буквы?",["A B C D","A D B C","A D C B","A C D B"],2,"Микрозадачи (Promise) выполняются раньше макрозадач (setTimeout).","console.log('A');\nsetTimeout(() => console.log('B'));\nPromise.resolve().then(() => console.log('C'));\nconsole.log('D');"),
+  Q(2,"Какое правило победит для одного и того же элемента?",["red","blue","Последнее в файле","Зависит от браузера"],0,"Специфичность (1,1,0) выше, чем (0,3,0).","#nav .item { color: red }\n.menu .item.active { color: blue }"),
+  Q(2,"Что выведет код?",["0 1 2","3 3 3","undefined ×3","0 0 0"],1,"var общая на весь цикл; с let вышло бы 0 1 2.","for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i));\n}"),
+  Q(2,"Почему компонент может не перерисоваться?",["setState асинхронный","Ссылка на массив не изменилась: React сравнивает по ссылке","push не работает с состоянием","Нужен forceUpdate"],1,"Нужно создать новый массив: setItems([...items, x]).","items.push(x);\nsetItems(items);"),
+  Q(2,"Чем useMemo отличается от useCallback?",["Ничем","useMemo запоминает результат вычисления, useCallback — саму функцию","useCallback работает только с async","useMemo вызывается на сервере"],1,"useCallback(fn, deps) — то же, что useMemo(() => fn, deps)."),
+  Q(2,"Кто блокирует ответ при ошибке CORS?",["Сервер","Браузер, если в ответе нет нужных заголовков Access-Control-Allow-*","Прокси","DNS"],1,"Сервер при этом запрос получил и обработал."),
+  Q(2,"Что всегда возвращает async-функция?",["undefined","Promise","Значение из return","Генератор"],1,"Даже return 5 превращается в Promise.resolve(5)."),
+  Q(2,"Где хранить токен сессии, чтобы его не украли через XSS?",["localStorage","sessionStorage","Cookie с флагом HttpOnly","Глобальная переменная"],2,"JavaScript не может прочитать HttpOnly cookie."),
+  Q(2,"Что делает debounce?",["Вызывает функцию не чаще раза в N мс","Вызывает функцию только после паузы в событиях","Отменяет все вызовы","Кеширует результат"],1,"Не чаще раза в N мс — это throttle."),
+  Q(3,"Какие метрики сейчас входят в Core Web Vitals?",["LCP, INP, CLS","FCP, TTI, TBT","LCP, FID, TTFB","FPS, CLS, TTI"],0,"В 2024 году INP заменил FID."),
+  Q(3,"Что делает useTransition в React 18?",["Анимирует переходы","Помечает обновление как несрочное, чтобы ввод оставался отзывчивым","Откладывает эффект","Переключает маршруты"],1,"Срочные обновления, например ввод текста, прерывают переходные."),
+  Q(3,"Самая частая причина утечки памяти в SPA?",["Слишком много компонентов","Не снятые обработчики, подписки и таймеры после размонтирования","Большой CSS","Много запросов к API"],1,"Чистите их в функции очистки useEffect."),
+  Q(3,"Почему анимация transform быстрее, чем анимация top и left?",["transform новее","transform и opacity обрабатывает композитор без пересчёта layout и paint","top и left не поддерживаются","Разницы нет"],1,"Изменение top запускает перерасчёт раскладки на каждом кадре."),
+  Q(3,"Что выведет код?",["a","a b","b","Ошибку Uncaught"],1,"catch обработал ошибку и вернул выполненный промис, поэтому then тоже сработает.","Promise.reject(new Error('x'))\n  .catch(() => console.log('a'))\n  .then(() => console.log('b'));"),
+  Q(3,"Частая причина hydration mismatch при SSR?",["Медленный сервер","Сервер и клиент отрисовали разный HTML, например из-за Date.now() или window в рендере","Отсутствие key","Большой бандл"],1,"Значения, зависящие от клиента, вычисляют в эффекте."),
+  Q(3,"С какими модулями лучше всего работает tree shaking?",["CommonJS (require)","ES-модули (import/export)","AMD","Глобальные скрипты"],1,"Статические импорты сборщик анализирует при сборке."),
+  Q(3,"Что такое stale closure в React?",["Компонент без состояния","Обработчик или эффект видит старое значение состояния — то, что было при его создании","Утечка памяти в замыкании","Ошибка сборки"],1,"Лечится правильными зависимостями или функциональным setState."),
+  Q(3,"От чего защищает заголовок Content-Security-Policy?",["От CSRF","От XSS: ограничивает, откуда загружаются и выполняются скрипты","От DDoS","От SQL-инъекций"],1,"От CSRF защищают SameSite cookie и токены."),
+  Q(3,"Что верно про Object.freeze?",["Замораживает объект целиком, со всеми вложенными","Заморозка поверхностная: вложенные объекты можно менять","Работает только в строгом режиме","Делает копию объекта"],1,"Глубокую заморозку делают рекурсивно.")]},
+ ops:{name:"DevOps",sub:"Docker, Kubernetes, CI/CD",code:"OPS",q:[
+  Q(1,"Какие права даёт chmod 640 file?",["Владелец: чтение и запись, группа: чтение, остальные: ничего","Все: чтение","Владелец: всё, группа: чтение","Владелец: чтение, группа: запись"],0,"6 = rw-, 4 = r--, 0 = ---."),
+  Q(1,"Что такое blue-green деплой?",["Два окружения, трафик переключается на новое целиком","Постепенная замена подов","Деплой только ночью","Откат через git revert"],0,"Постепенная замена — это rolling update."),
+  Q(1,"Какая команда показывает запущенные контейнеры?",["docker images","docker ps","docker run","docker logs"],1,"docker ps -a покажет и остановленные."),
+  Q(1,"Что делает git revert <commit>?",["Удаляет коммит из истории","Создаёт новый коммит, отменяющий изменения указанного","Переключает ветку","Сбрасывает рабочую копию"],1,"История не переписывается, поэтому это безопасно для общих веток."),
+  Q(1,"Порт HTTPS по умолчанию?",["80","8080","443","22"],2,"80 — HTTP, 22 — SSH."),
+  Q(1,"Как посмотреть логи пода?",["kubectl get logs","kubectl logs <pod>","kubectl describe logs","docker logs <pod>"],1,"Для конкретного контейнера добавьте -c <container>."),
+  Q(1,"Чем образ отличается от контейнера?",["Это одно и то же","Образ — шаблон только для чтения, контейнер — его запущенный экземпляр","Контейнер хранится в registry","Образ работает только в Kubernetes"],1,"Из одного образа запускают много контейнеров."),
+  Q(1,"Что показывает df -h?",["Размер каталогов","Свободное и занятое место на файловых системах","Нагрузку CPU","Открытые порты"],1,"Размер каталогов показывает du -sh."),
+  Q(1,"Что такое CI?",["Ручная сборка перед релизом","Автоматическая сборка и тесты при каждом изменении кода","Мониторинг серверов","Резервное копирование"],1,"CD продолжает CI автоматической доставкой."),
+  Q(1,"Где хранить пароль к БД для пайплайна?",["В репозитории","В секретах CI или в хранилище секретов","В Dockerfile","В README"],1,"Всё, что попало в git, остаётся в истории."),
+  Q(2,"Зачем в Dockerfile копировать package.json и ставить зависимости до COPY . . ?",["Так меньше итоговый образ","Слой с зависимостями кешируется, пока не меняется package.json","Так требует Docker","Чтобы сработал .dockerignore"],1,"Изменение кода не сбрасывает кеш слоя npm install."),
+  Q(2,"У пода перестала проходить readinessProbe. Что произойдёт?",["Под перезапустится","Под удалится","Под уберут из endpoints сервиса, трафик на него не пойдёт","Ничего"],2,"Перезапуск делает livenessProbe."),
+  Q(2,"Контейнер завершился с кодом 137. Самая вероятная причина?",["Синтаксическая ошибка","Процесс убит SIGKILL, часто из-за OOM","Нормальное завершение","Нет сети"],1,"137 = 128 + 9 (SIGKILL)."),
+  Q(2,"Где хранить Terraform state в команде?",["В git рядом с кодом","Локально у каждого","В удалённом бэкенде с блокировкой","В переменных CI"],2,"Блокировка защищает от одновременных apply."),
+  Q(2,"Зачем multi-stage build?",["Чтобы собирать быстрее параллельно","В итоговый образ попадают только артефакты, без компиляторов и исходников","Для запуска нескольких процессов","Для работы в Windows"],1,"Образ становится меньше, а поверхность атаки — уже."),
+  Q(2,"Чем StatefulSet отличается от Deployment?",["Ничем","Поды получают стабильные имена и собственные тома","StatefulSet не масштабируется","Deployment не умеет обновления"],1,"Подходит для баз данных и брокеров."),
+  Q(2,"Где доступен Service типа ClusterIP?",["Из интернета","Только внутри кластера","Только на ноде","Только из соседнего namespace"],1,"Извне — NodePort, LoadBalancer или Ingress."),
+  Q(2,"Как быстро откатить неудачный релиз Deployment?",["kubectl delete deployment","kubectl rollout undo deployment/<name>","kubectl restart","kubectl apply старого файла, другого способа нет"],1,"Kubernetes хранит историю ReplicaSet."),
+  Q(2,"Load average 8 на 4-ядерной машине означает…",["Загрузку 8%","В очереди на CPU или на ввод-вывод в среднем вдвое больше задач, чем ядер","8 процессов всего","Норму"],1,"Сравнивайте load average с числом ядер."),
+  Q(2,"Как Prometheus собирает метрики?",["Сервисы сами отправляют метрики (push)","Prometheus опрашивает /metrics сервисов (pull)","Читает логи","Через SNMP"],1,"Для коротких задач есть Pushgateway."),
+  Q(3,"Под превысил limit по CPU, а другой — limit по памяти. Что будет?",["Оба перезапустятся","CPU будет троттлиться, а превысившего память убьёт OOMKill","Оба будут троттлиться","Ничего"],1,"CPU — сжимаемый ресурс, память — нет."),
+  Q(3,"Под в CrashLoopBackOff, текущие логи пусты. Что смотреть?",["Перезапустить ноду","kubectl describe pod и kubectl logs --previous","Удалить namespace","Увеличить replicas"],1,"Логи упавшего контейнера доступны через --previous."),
+  Q(3,"Почему приложение в контейнере не завершается по SIGTERM?",["SIGTERM не доходит до контейнеров","Оно запущено как PID 1 через shell-форму CMD или не обрабатывает сигналы; нужна exec-форма или init вроде tini","Нужен SIGHUP","Docker блокирует сигналы"],1,"PID 1 не получает обработчиков сигналов по умолчанию."),
+  Q(3,"SLO доступности 99,9% за 30 дней. Сколько простоя допустимо?",["~4 минуты","~43 минуты","~7 часов","~1 день"],1,"43 200 минут × 0,001 ≈ 43 минуты."),
+  Q(3,"Что такое канареечный релиз?",["Релиз по пятницам","Новая версия получает малую долю трафика, и по метрикам решают, расширять ли её","Ручное тестирование","Откат по таймеру"],1,"Ошибка затрагивает только малую часть пользователей."),
+  Q(3,"Как избежать дрейфа конфигурации серверов?",["Чаще заходить по SSH","Неизменяемая инфраструктура: пересоздавать серверы из кода, а не править руками","Делать бэкапы","Отключить обновления"],1,"Ручные правки расходятся с кодом и не воспроизводятся."),
+  Q(3,"Что будет при kubectl drain ноды, если у PodDisruptionBudget minAvailable равен числу реплик?",["Поды переедут мгновенно","Drain зависнет: выселить ни один под нельзя","PDB проигнорируется","Нода удалится"],1,"Оставляйте запас: minAvailable меньше числа реплик."),
+  Q(3,"Полное DNS-имя сервиса в Kubernetes?",["service.cluster","service.namespace.svc.cluster.local","namespace.service.local","pod.service.k8s"],1,"Внутри одного namespace хватает короткого имени."),
+  Q(3,"Что такое GitOps?",["Хранить скрипты в git","Желаемое состояние кластера лежит в git, агент в кластере сам приводит его к нему","Деплой через git push в прод-сервер","Code review для инфраструктуры"],1,"Примеры агентов: Argo CD, Flux."),
+  Q(3,"Диск заполнен на 100%, а du не находит больших файлов. Причина?",["Сломан du","Удалённый файл всё ещё открыт процессом; ищите через lsof +L1","Диск неисправен","Это кеш ядра"],1,"Место освободится после перезапуска процесса или закрытия файла.")]},
+ c1:{name:"1С",sub:"Платформа 8.3, ERP, УТ",code:"1C",q:[
+  Q(1,"В каком обработчике модуля документа формируются движения при проведении?",["ПередЗаписью","ОбработкаПроведения","ПриЗаписи","ОбработкаЗаполнения"],1,"Именно здесь документ записывает движения в регистры."),
+  Q(1,"Какой объект подходит для учёта остатков товаров на складах?",["Регистр сведений","Регистр накопления вида «Остатки»","Регистр накопления вида «Обороты»","Справочник"],1,"Регистр вида «Обороты» не хранит остатки."),
+  Q(1,"Какой объект хранит условно-постоянную информацию: номенклатуру, контрагентов?",["Документ","Справочник","Регистр накопления","Обработка"],1,"Документы фиксируют события, справочники — списки."),
+  Q(1,"Что такое табличная часть объекта?",["Отдельный справочник","Таблица строк внутри объекта, например товары в документе","Регистр сведений","Форма списка"],1,"У каждой строки табличной части свои реквизиты."),
+  Q(1,"Какое слово в запросе убирает повторяющиеся строки?",["УНИКАЛЬНЫЕ","РАЗЛИЧНЫЕ","ПЕРВЫЕ","СГРУППИРОВАТЬ"],1,"ВЫБРАТЬ РАЗЛИЧНЫЕ …"),
+  Q(1,"В каком обработчике формы готовят данные на сервере при её создании?",["ПриОткрытии","ПриСозданииНаСервере","ПередЗакрытием","ПриИзменении"],1,"ПриОткрытии выполняется уже на клиенте."),
+  Q(1,"Чем перечисление отличается от справочника?",["Ничем","Значения задаются в конфигураторе, пользователь не может их добавить","Перечисление хранит остатки","Перечисление нельзя использовать в запросах"],1,"Пример — виды оплаты или статусы."),
+  Q(1,"Для чего нужен общий модуль?",["Для хранения данных","Для процедур и функций, которые вызываются из разных мест","Для отчётов","Для прав доступа"],1,"Флаги модуля определяют, где он доступен: на сервере, на клиенте и т. д."),
+  Q(1,"Для чего подходит периодический регистр сведений?",["Учёт остатков","Хранение значений на дату: курсы валют, цены","Бухгалтерские проводки","Печатные формы"],1,"Срез последних даёт значения на нужную дату."),
+  Q(1,"Что делает метод Сообщить(\"Текст\")?",["Записывает в журнал регистрации","Показывает сообщение пользователю","Отправляет email","Останавливает выполнение"],1,"В формах лучше использовать объект СообщениеПользователю."),
+  Q(2,"Нужно получить цены для 500 строк табличной части. Как правильно?",["Запрос в цикле по строкам","Один запрос с передачей всех номенклатур параметром","НайтиПоКоду для каждой строки","Читать регистр через объектную модель"],1,"Запрос в цикле — классическая причина медленной работы."),
+  Q(2,"Чем &НаСервереБезКонтекста отличается от &НаСервере?",["Ничем","Не передаёт данные формы на сервер, поэтому вызов быстрее","Выполняется на клиенте","Работает только в файловой базе"],1,"Меньше трафика между клиентом и сервером."),
+  Q(2,"Как правильно отобрать остатки по складу из виртуальной таблицы Остатки?",["Условием в ГДЕ","Условием в параметрах виртуальной таблицы","Через СГРУППИРОВАТЬ ПО","Отбором в коде после запроса"],1,"Отбор в параметрах применяется до расчёта остатков."),
+  Q(2,"Чем ЛЕВОЕ СОЕДИНЕНИЕ отличается от ВНУТРЕННЕГО?",["Ничем","Левое оставляет все строки левой таблицы, даже без пары","Внутреннее быстрее всегда","Левое работает только с регистрами"],1,"Поля правой таблицы без пары будут NULL."),
+  Q(2,"Зачем в пакетном запросе ПОМЕСТИТЬ во временную таблицу?",["Чтобы сохранить данные в базу","Чтобы использовать результат в следующих запросах пакета","Чтобы ускорить запись","Чтобы обойти права доступа"],1,"Временную таблицу можно проиндексировать: ИНДЕКСИРОВАТЬ ПО."),
+  Q(2,"Для чего используют систему компоновки данных (СКД)?",["Для обмена данными","Для отчётов, где пользователь сам настраивает группировки и отборы","Для проведения документов","Для прав доступа"],1,"Пользователь меняет отчёт без программиста."),
+  Q(2,"Чем опасно обращение через точку к полю составного типа в запросе, например Регистратор.Номер?",["Ничем","Платформа делает неявные соединения со всеми таблицами типов, запрос сильно тормозит","Это синтаксическая ошибка","Работает только в файловой базе"],1,"Приводите тип через ВЫРАЗИТЬ."),
+  Q(2,"Как получить последние цены на дату из периодического регистра сведений?",["Отбор ГДЕ Период = &Дата","Виртуальная таблица СрезПоследних(&Дата)","Выбрать МАКСИМУМ(Период) вручную всегда","Через объектную модель"],1,"СрезПоследних делает это оптимально."),
+  Q(2,"Что значит оперативное проведение документа?",["Проведение без записи движений","Проведение текущим моментом с контролем остатков","Проведение задним числом","Проведение в фоне"],1,"Документ будущей датой оперативно провести нельзя."),
+  Q(2,"Зачем нужны расширения конфигурации?",["Для ускорения базы","Чтобы менять типовую конфигурацию без снятия с поддержки и упростить обновления","Для хранения файлов","Для обмена с сайтом"],1,"Доработки живут отдельно от основной конфигурации."),
+  Q(3,"Как установить управляемую блокировку перед чтением остатков при проведении?",["Через объект БлокировкаДанных","Через ЗаблокироватьДанныеДляРедактирования","Блокировки ставятся сами, ничего делать не нужно","Через транзакцию без блокировки"],0,"Иначе при параллельном проведении возможен уход в минус."),
+  Q(3,"Как контролируют остатки при проведении по «новой методике»?",["Читают остатки до записи движений","Сначала записывают движения, потом запросом проверяют отрицательные остатки","Не контролируют","Проверяют на клиенте"],1,"Так меньше чтений и короче время блокировки."),
+  Q(3,"Длительная операция подвешивает интерфейс пользователя. Решение?",["Увеличить таймаут","Выполнить её фоновым заданием, например через ДлительныеОперации из БСП","Перенести на клиент","Разбить на несколько кнопок"],1,"Форма опрашивает статус и показывает прогресс."),
+  Q(3,"Запись 10 000 объектов в одной транзакции. В чём проблема?",["Её нет","Транзакция долго держит блокировки и мешает другим пользователям; лучше писать порциями","1С не поддерживает транзакции","Объекты запишутся дважды"],1,"При ошибке ещё и откатится вся работа."),
+  Q(3,"Для чего в запросе используют ВЫРАЗИТЬ?",["Для форматирования чисел","Для приведения составного типа к конкретному и отказа от лишних соединений","Для конкатенации строк","Для условий ГДЕ"],1,"Например: ВЫРАЗИТЬ(Регистратор КАК Документ.Реализация).Номер."),
+  Q(3,"Как задать вопрос пользователю в режиме без модальности?",["Функцией Вопрос()","ПоказатьВопрос с ОписаниеОповещения или асинхронно через Ждать","Через Предупреждение()","Модальные окна разрешены всегда"],1,"Синхронные модальные вызовы не работают в веб-клиенте."),
+  Q(3,"Когда стоит включить индексирование реквизита справочника?",["Всегда для всех реквизитов","Когда по нему часто отбирают или сортируют в запросах","Никогда","Только для строковых реквизитов"],1,"Лишние индексы замедляют запись."),
+  Q(3,"Чем регистр бухгалтерии отличается от регистра накопления?",["Ничем","Хранит проводки по дебету и кредиту счетов плана счетов","Не хранит остатки","Работает только в БП"],1,"Нужен план счетов, а при необходимости — виды субконто."),
+  Q(3,"Какой стандартный механизм платформы используют для обмена данными между базами?",["Внешние обработки","Планы обмена","Регистры сведений","Общие формы"],1,"Планы обмена регистрируют изменения для узлов."),
+  Q(3,"Почему нельзя вызывать серверную функцию из клиентского кода в цикле?",["Можно, это нормально","Каждый вызов — отдельный запрос к серверу по сети; нужно собрать данные и вызвать сервер один раз","Сервер не поддерживает циклы","Это приведёт к блокировке базы"],1,"Количество серверных вызовов — главный показатель производительности формы.")]}
+};
+
+const LEVELS=[[90,"Senior","good"],[70,"Middle","good"],[50,"Junior","warn"],[0,"Не пройден","bad"]];
+const MARKET={Junior:[80,120],Middle:[150,215],Senior:[260,360],Lead:[330,460]};
+const DIRMUL={be:1.03,fe:.97,ops:1.05,c1:.97};
+const FEE=.18,AGENCY=.18;
+const T=60,PER=4,DIFF={1:"базовый",2:"средний",3:"сложный"};
+const TOPICS={be:["Базы данных","API и HTTP","Архитектура","Безопасность"],fe:["JavaScript","React","CSS и вёрстка","Производительность"],ops:["Контейнеры","Kubernetes","CI/CD","Linux"],c1:["Запросы","Регистры","Клиент-сервер","Блокировки"]};
+const $=id=>document.getElementById(id);
+function h(tag,attrs,...kids){const e=document.createElement(tag);if(attrs)for(const[k,v]of Object.entries(attrs)){if(v==null||v===false)continue;if(k==="class")e.className=v;else if(k.startsWith("on"))e.addEventListener(k.slice(2),v);else if(k==="text")e.textContent=v;else e.setAttribute(k,v===true?"":v)}for(const k of kids.flat()){if(k==null||k===false)continue;e.append(k instanceof Node?k:document.createTextNode(String(k)))}return e}
+const NS="http://www.w3.org/2000/svg";
+function s(tag,attrs,...kids){const e=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(attrs||{}))e.setAttribute(k,v);e.append(...kids);return e}
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const rub=n=>Math.round(n).toLocaleString("ru-RU");
+const fmtDate=x=>x.toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"});
+
+/* ---------- registry ---------- */
+const REG=new Map();
+REG.set("ITP-BE-2026-04817",{name:"Иван Петров",dir:"Backend",lvl:"Senior",pct:91,issued:"12 октября 2026 г.",until:"12 октября 2028 г.",sample:true,topics:[["Базы данных",94],["API и HTTP",92],["Архитектура",86],["Безопасность",90]]});
+
+/* ---------- certificate ---------- */
+function guilloche(){
+  const g=s("svg",{class:"gu",viewBox:"0 0 297 210",preserveAspectRatio:"none","aria-hidden":"true"});
+  for(let k=0;k<26;k++){let d="";const ph=k*.42;for(let x=0;x<=297;x+=2){const y=105+Math.sin(x/9+ph)*Math.cos(x/41+k*.2)*(18+k*.5)+(k-13)*5.2;d+=(x?"L":"M")+x+" "+y.toFixed(2)}g.append(s("path",{d,fill:"none",stroke:"#9a7b3f","stroke-opacity":".09","stroke-width":".25"}))}
+  const ros=s("g",{transform:"translate(148.5 112)"});
+  for(let k=0;k<36;k++)ros.append(s("ellipse",{rx:"34",ry:"9",transform:"rotate("+k*5+")",fill:"none",stroke:"#0b1f3a","stroke-opacity":".05","stroke-width":".25"}));
+  g.append(ros);return g;
+}
+let sealN=0;
+function seal(){
+  const id="sealArc"+(sealN++);
+  const g=s("svg",{class:"seal",viewBox:"0 0 120 120","aria-hidden":"true"});
+  g.append(s("defs",{},s("path",{id,d:"M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"})));
+  for(let k=0;k<48;k++){const a=k/48*Math.PI*2;g.append(s("line",{x1:60+Math.cos(a)*56,y1:60+Math.sin(a)*56,x2:60+Math.cos(a)*59,y2:60+Math.sin(a)*59,stroke:"#9a7b3f","stroke-width":"1.2"}))}
+  g.append(s("circle",{cx:"60",cy:"60",r:"54",fill:"none",stroke:"#9a7b3f","stroke-width":"1"}),s("circle",{cx:"60",cy:"60",r:"34",fill:"none",stroke:"#9a7b3f","stroke-width":".8"}));
+  g.append(s("text",{"font-size":"8.4","font-family":"Golos Text, sans-serif","font-weight":"600","letter-spacing":"2",fill:"#9a7b3f"},s("textPath",{href:"#"+id},"АЙТИ ПРО · НЕЗАВИСИМАЯ ОЦЕНКА · РЕЕСТР ·")));
+  const mono=s("text",{x:"60",y:"68","text-anchor":"middle","font-size":"24","font-family":"Cormorant Garamond, serif","font-weight":"700",fill:"#9a7b3f"});mono.textContent="АП";g.append(mono);
+  return g;
+}
+function signature(seed){
+  const g=s("svg",{viewBox:"0 0 120 30",preserveAspectRatio:"none","aria-hidden":"true"});
+  let d="M4 22",x=4;for(let i=0;i<9;i++){x+=11+((seed*7+i*13)%5);const y=6+((seed*3+i*11)%16);d+=" Q"+(x-6)+" "+(y-10)+" "+x+" "+y}
+  g.append(s("path",{d,fill:"none",stroke:"#1b3560","stroke-width":"1.3","stroke-linecap":"round"}));return g;
+}
+function qrSvg(text){
+  if(typeof qrcode!=="function")return s("svg",{viewBox:"0 0 10 10"});
+  const q=qrcode(0,"M");q.addData(text);q.make();const n=q.getModuleCount();
+  const g=s("svg",{viewBox:"0 0 "+n+" "+n,"shape-rendering":"crispEdges",role:"img","aria-label":"QR-код для проверки"});
+  let d="";for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(q.isDark(r,c))d+="M"+c+" "+r+"h1v1h-1z";
+  g.append(s("path",{d,fill:"#0b1f3a"}));return g;
+}
+function certificate(num,c){
+  return h("div",{class:"cert",role:"img","aria-label":"Сертификат "+c.lvl+" "+c.dir+", "+c.name+", номер "+num},
+    guilloche(),h("div",{class:"frame"}),
+    h("div",{class:"wm"},h("span",null,c.sample?"ОБРАЗЕЦ":"ДЕМО")),
+    h("div",{class:"body"},
+      h("div",{class:"t1"},h("span",{class:"brand"},h("i",null,"АП"),"АйТи Про"),h("span",null,"Реестр независимой оценки")),
+      h("div",{class:"ti"},h("b",null,"СЕРТИФИКАТ"),h("span",null,"о подтверждении профессионального уровня")),
+      h("div",{class:"mid"},
+        h("div",{class:"s",text:"Настоящим удостоверяется, что"}),
+        h("div",{class:"who",text:c.name}),
+        h("div",{class:"rule"}),
+        h("div",{class:"s",text:"прошёл(а) независимую оценку по методике АйТи Про и подтвердил(а) уровень"}),
+        h("div",{class:"lv"},h("b",{text:c.lvl}),h("span",{text:c.dir+" · "+c.pct+"%"})),
+        h("div",{class:"topics"},c.topics.map(([t,v])=>h("span",null,t+" ",h("em",{text:v+"%"}))))),
+      h("div",{class:"foot"},
+        h("div",{class:"sig"},h("i",null,signature(3)),"Председатель экспертного совета"),
+        h("div",{class:"sig"},h("i",null,signature(8)),"Эксперт по направлению"),
+        h("div",{class:"reg"},"Номер в реестре",h("b",{text:num}),"Выдан "+c.issued,"Действителен до "+c.until),
+        h("div",{class:"qr"},qrSvg("ITPRO REGISTRY "+num)))),
+    seal());
+}
+
+/* ---------- verify ---------- */
+function verify(){
+  const num=$("vNum").value.trim().toUpperCase(),r=$("vRes");
+  if(!/^ITP-[A-Z0-9]{2,3}-\d{4}-\d{5}$/.test(num)){r.replaceChildren(h("span",{class:"no",text:"Неверный формат номера"}),h("span",{class:"muted",text:"Номер выглядит так: ITP-BE-2026-04817"}));return}
+  const c=REG.get(num);
+  if(!c){r.replaceChildren(h("span",{class:"no",text:"Сертификат "+num+" не найден в реестре"}),h("span",{class:"muted",text:"Если вам показали такой сертификат, он недействителен."}));return}
+  r.replaceChildren(h("span",{class:"ok",text:"✓ Сертификат действителен"}),h("dl",null,
+    h("dt",null,"Владелец"),h("dd",{text:c.name}),h("dt",null,"Уровень"),h("dd",{text:c.lvl+" · "+c.dir}),
+    h("dt",null,"Результат"),h("dd",{text:c.pct+"%"}),h("dt",null,"Действует до"),h("dd",{text:c.until})),
+    h("span",{class:"muted",text:c.sample?"Это образец для демонстрации.":"Демо-сертификат, выданный в этой вкладке."}));
+}
+$("vBtn").addEventListener("click",verify);
+$("vNum").addEventListener("keydown",e=>{if(e.key==="Enter")verify()});
+$("vSample").addEventListener("click",e=>{e.preventDefault();$("vNum").value="ITP-BE-2026-04817";verify()});
+
+/* ---------- test ---------- */
+const S={dir:"be",qs:[],i:0,picked:null,answers:[],left:T,timer:null,away:0,running:false};
+function renderDirs(){$("dirs").replaceChildren(...Object.entries(DIRS).map(([k,d])=>h("button",{class:"dir","aria-pressed":S.dir===k?"true":"false",disabled:S.running,onclick:()=>{S.dir=k;renderDirs();idle()}},h("b",{text:d.name}),h("span",{text:d.sub}))))}
+function idle(){
+  const d=DIRS[S.dir];
+  $("testPanel").replaceChildren(
+    h("div",{class:"qhead"},h("span",null,"Этап I · "+d.name),h("span",null,(PER*3)+" из "+d.q.length+" вопросов · "+T+" с на вопрос")),
+    h("h3",{text:"Правила оценки"}),
+    h("ul",{style:"margin:0;padding-left:20px;display:grid;gap:8px;color:var(--ink2)"},
+      h("li",null,"Каждый получает свой набор: 4 базовых, 4 средних и 4 сложных вопроса, варианты перемешаны."),
+      h("li",null,"Сложный вопрос стоит 3 балла, средний — 2, базовый — 1."),
+      h("li",null,"На вопрос — минута. Время вышло — ответ не засчитан."),
+      h("li",null,"Уходы со вкладки фиксируются и попадают в отчёт.")),
+    h("p",{class:"muted",style:"font-size:14px"},"Шкала: от 90% — Senior, от 70% — Middle, от 50% — Junior. Уровень Lead присваивается только после интервью с экспертом."));
+}
+function start(){
+  if(!$("tName").value.trim()){$("tName").focus();$("tName").placeholder="Введите имя — оно будет на сертификате";return}
+  S.qs=[1,2,3].flatMap(n=>shuffle(DIRS[S.dir].q.filter(q=>q.d===n)).slice(0,PER)).map(q=>({...q,order:shuffle(q.o.map((_,i)=>i))}));
+  S.i=0;S.answers=[];S.away=0;S.running=true;$("startBtn").disabled=true;$("tName").disabled=true;renderDirs();ask();
+}
+function ask(){
+  S.picked=null;S.left=T;clearInterval(S.timer);
+  S.timer=setInterval(()=>{S.left--;const t=$("qTimer");if(t){t.textContent="0:"+String(Math.max(S.left,0)).padStart(2,"0");t.classList.toggle("low",S.left<=10)}if(S.left<=0)next(true)},1000);
+  const q=S.qs[S.i];
+  const btns=q.order.map((oi,k)=>h("button",{class:"opt","aria-pressed":"false",onclick:e=>{S.picked=oi;document.querySelectorAll(".opt").forEach(b=>b.setAttribute("aria-pressed",b===e.currentTarget?"true":"false"));$("nextBtn").disabled=false}},h("span",{class:"k",text:"ABCD"[k]}),h("span",{text:q.o[oi]})));
+  $("testPanel").replaceChildren(
+    h("div",{class:"qhead"},h("span",null,"Вопрос "+(S.i+1)+" из "+S.qs.length+" · "+DIFF[q.d]),h("span",{class:"timer",id:"qTimer"},"1:00")),
+    h("div",{class:"progress"},h("i",{style:"width:"+(S.i/S.qs.length*100)+"%"})),
+    h("div",{class:"qtext",text:q.t}),
+    q.c?h("pre",{class:"code",text:q.c}):null,
+    h("div",{class:"opts",role:"group","aria-label":"Варианты ответа"},btns),
+    h("div",{class:"row"},h("span",{class:"grow muted",style:"font-size:13px"},S.away?"Уходов со вкладки: "+S.away:""),h("button",{class:"primary",id:"nextBtn",disabled:true,onclick:()=>next(false)},S.i===S.qs.length-1?"Завершить":"Ответить")));
+}
+function next(timeout){
+  clearInterval(S.timer);
+  const q=S.qs[S.i];S.answers.push({q,ok:!timeout&&S.picked===q.a,timeout});
+  S.i++;if(S.i<S.qs.length)ask();else finish();
+}
+function finish(){
+  S.running=false;$("startBtn").disabled=false;$("tName").disabled=false;$("startBtn").textContent="Пройти ещё раз";renderDirs();
+  const right=S.answers.filter(a=>a.ok).length,max=S.answers.reduce((t,a)=>t+a.q.d,0),got=S.answers.reduce((t,a)=>t+(a.ok?a.q.d:0),0),pct=Math.round(got/max*100);
+  const [,lvl,tone]=LEVELS.find(([m])=>pct>=m);
+  const d=DIRS[S.dir],name=$("tName").value.trim();
+  const now=new Date(),until=new Date(now);until.setFullYear(until.getFullYear()+2);
+  const num="ITP-"+d.code+"-"+now.getFullYear()+"-"+String(Math.floor(10000+Math.random()*89999));
+  const passed=lvl!=="Не пройден",m=MARKET[lvl];
+  const topics=TOPICS[S.dir].map((t,i)=>{const part=S.answers.filter((_,j)=>j%4===i);const mx=part.reduce((a,b)=>a+b.q.d,0),g=part.reduce((a,b)=>a+(b.ok?b.q.d:0),0);return [t,Math.round(g/mx*100)]});
+  const c={name,dir:d.name,lvl,pct,issued:fmtDate(now),until:fmtDate(until),topics};
+  if(passed)REG.set(num,c);
+  $("testPanel").replaceChildren(h("div",{class:"result"},
+    h("div",{class:"qhead"},h("span",null,"Результат · "+d.name),h("span",null,"уходов со вкладки: "+S.away)),
+    h("div",{class:"score"},h("b",{class:"num",text:pct+"%"}),h("span",{class:"pill "+tone,text:lvl}),h("span",{class:"muted",text:right+" из "+S.answers.length+" верно · "+got+" из "+max+" баллов"})),
+    m?h("p",{class:"muted"},"Рыночная вилка оклада для уровня «"+lvl+"» в направлении "+d.name+": ",h("b",{class:"num",style:"color:var(--ink)",text:rub(m[0]*DIRMUL[S.dir])+"–"+rub(m[1]*DIRMUL[S.dir])+" тыс. ₽"})," в месяц."):h("p",{class:"muted"},"Повторная попытка на платформе — через 30 дней. Разбор ответов ниже."),
+    passed?[h("div",{class:"scrollx"},h("div",{style:"min-width:520px"},certificate(num,c))),h("p",{class:"muted",style:"font-size:13px"},"Номер "+num+" добавлен в демо-реестр — его можно проверить в форме вверху страницы.")]:null,
+    h("h3",{text:"Разбор ответов"}),
+    h("div",{class:"review"},S.answers.map(a=>h("div",{class:a.ok?"ok":"no"},
+      h("b",{text:DIFF[a.q.d]+" · "+a.q.t}),
+      a.q.c?h("pre",{class:"code",text:a.q.c}):null,
+      h("span",{class:"muted",text:(a.ok?"Верно: ":a.timeout?"Время вышло. Верно: ":"Неверно. Верно: ")+a.q.o[a.q.a]}),
+      h("span",{text:a.q.e}))))));
+  $("testPanel").scrollIntoView({behavior:"smooth",block:"start"});
+}
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&S.running)S.away++});
+$("startBtn").addEventListener("click",start);
+
+/* ---------- companies ---------- */
+function renderCands(){
+  const dir=$("cDir").value,lvl=$("cLvl").value,budget=+$("cBudget").value||0,d=DIRS[dir];
+  const base={Junior:62,Middle:76,Senior:91,Lead:95}[lvl];
+  const seeds=[[2,-3,4,1],[-1,4,0,-2],[3,1,-3,2]];
+  const exp={Junior:["1 год","1,5 года","2 года"],Middle:["3 года","4 года","3,5 года"],Senior:["6 лет","8 лет","5 лет"],Lead:["9 лет","11 лет","10 лет"]}[lvl];
+  const asks=[.93,1,1.08].map(k=>{const m=MARKET[lvl];return Math.round((m[0]+m[1])/2*DIRMUL[dir]*k/5)*5});
+  $("cands").replaceChildren(...seeds.map((sd,i)=>{
+    const scores=TOPICS[dir].map((t,j)=>[t,Math.max(40,Math.min(99,base+sd[j]))]);
+    const fits=asks[i]*1000<=budget;
+    return h("article",{class:"cand"},
+      h("div",{class:"id"},h("span",{text:"ITP-"+d.code+"-2026-0"+(4810+i*37)}),h("span",{text:"пример"})),
+      h("div",{class:"lv",text:lvl+" · "+d.name}),
+      h("div",{class:"muted",style:"font-size:14px",text:exp[i]+" опыта · сфера: "+$("cInd").value}),
+      h("div",{class:"bars"},scores.map(([t,v])=>h("div",{class:"bar"},h("span",{text:t}),h("i",null,h("b",{style:"width:"+v+"%"})),h("em",{text:v+"%"})))),
+      h("div",{class:"row",style:"justify-content:space-between"},h("span",{class:"num",text:"ожидает "+asks[i]+" тыс. ₽"}),h("span",{class:"pill "+(fits?"good":"warn"),text:fits?"в бюджете":"выше бюджета"})),
+      h("div",{class:"fee"},"Оплата подбора",h("b",{class:"num",text:rub(asks[i]*1000*FEE)+" ₽ в месяц, пока работает"})),
+      h("button",{onclick:e=>{e.currentTarget.textContent="Приглашение отправлено (демо)";e.currentTarget.disabled=true}},"Пригласить на интервью"));
+  }));
+}
+
+/* ---------- pricing ---------- */
+function renderPricing(){
+  const sal=Math.max(0,+$("pSal").value||0),n=+$("pMon").value;
+  $("pMonV").textContent=n+(n===12?" и дольше":"");
+  $("pBars").replaceChildren(...Array.from({length:12},(_,i)=>h("i",{class:i<n?"on":"stop"})));
+  const monthly=sal*FEE,ours=monthly*n,them=sal*12*AGENCY;
+  $("pMonthly").textContent=rub(monthly)+" ₽";
+  $("pOurs").textContent=rub(ours)+" ₽";
+  $("pOursNote").textContent=n<12?"Сотрудник ушёл — дальше вы не платите":"Это максимум: после 12 месяцев платежи заканчиваются";
+  $("pThem").textContent=rub(them)+" ₽";
+  $("pThemNote").textContent=n<=3?"Оплата сразу; в гарантийный срок агентство ищет замену":"Оплата сразу; гарантия уже закончилась, деньги не возвращаются";
+}
+
+/* ---------- audit ---------- */
+function renderAudit(){
+  const dir=$("aDir").value,lvl=$("aLvl").value,sal=(+$("aSal").value||0)/1000;
+  const [lo,hi]=MARKET[lvl].map(v=>v*DIRMUL[dir]);
+  $("aRange").textContent=rub(lo)+"–"+rub(hi)+" тыс. ₽";
+  const max=Math.max(hi*1.8,sal*1.1),pos=v=>Math.min(100,v/max*100);
+  $("aFair").style.left=pos(lo)+"%";$("aFair").style.width=(pos(hi)-pos(lo))+"%";
+  $("aPin").style.left="calc("+pos(sal)+"% - 1px)";$("aPinLbl").style.left=Math.min(88,Math.max(12,pos(sal)))+"%";$("aPinLbl").textContent="сейчас "+rub(sal)+" тыс.";
+  const v=$("aVerdict");let cls,title,text;
+  if(sal>hi){const over=Math.round((sal/hi-1)*100),year=(sal-hi)*12;cls="bad";title="Оклад выше рынка на "+over+"%";text="Разница с верхней границей — около "+rub(year)+" тыс. ₽ в год. Варианты: расширить зону ответственности, согласовать с сотрудником план роста до следующего уровня или подобрать специалиста нужного уровня.";}
+  else if(sal<lo){const under=Math.round((1-sal/lo)*100);cls="warn";title="Оклад ниже рынка на "+under+"%";text="Есть риск, что сотрудник уйдёт к конкуренту. Замена обычно дороже повышения: подбор, адаптация, потерянные месяцы.";}
+  else{cls="good";title="Оклад соответствует рынку";text="Аудит покажет сильные стороны и риски, которые не видны по окладу.";}
+  v.className="verdictbox "+cls;v.replaceChildren(h("b",{text:title}),h("p",{text:text}));
+}
+
+/* ---------- documents ---------- */
+const DOCS=[["Договор на подбор","Помесячная оплата 18% оклада, 12 месяцев, прекращение при увольнении"],["Договор на аудит и NDA","Порядок доступа к данным, конфиденциальность, сроки"],["Форма уведомления сотрудника","О проведении аудита и передаче данных"],["Политика обработки персональных данных","По 152-ФЗ, хранение на серверах в РФ"],["Методика оценки, редакция 1.0","Этапы, веса, шкала уровней, правила пересдачи"],["Образец отчёта по аудиту","Структура отчёта: факты, уровень, рыночная вилка"]];
+function docIcon(){const g=s("svg",{viewBox:"0 0 28 34","aria-hidden":"true"});g.append(s("path",{d:"M1 1h18l8 8v24H1z",fill:"none",stroke:"#0b1f3a","stroke-width":"1"}),s("path",{d:"M19 1v8h8",fill:"none",stroke:"#0b1f3a","stroke-width":"1"}),s("path",{d:"M6 16h16M6 21h16M6 26h10",stroke:"#9a7b3f","stroke-width":"1"}));return g}
+$("docs").replaceChildren(...DOCS.map(([t,d])=>h("div",null,docIcon(),h("div",null,h("b",{text:t}),h("span",{text:d})))));
+
+/* init */
+$("certSample").append(h("div",{class:"scrollx"},h("div",{style:"min-width:520px"},certificate("ITP-BE-2026-04817",REG.get("ITP-BE-2026-04817")))));
+for(const sel of ["cDir","aDir"])$(sel).replaceChildren(...Object.entries(DIRS).map(([k,d])=>h("option",{value:k,text:d.name})));
+["cDir","cLvl","cInd","cBudget"].forEach(id=>$(id).addEventListener("input",renderCands));
+["aDir","aLvl","aSal"].forEach(id=>$(id).addEventListener("input",renderAudit));
+["pSal","pMon"].forEach(id=>$(id).addEventListener("input",renderPricing));
+renderDirs();idle();renderCands();renderAudit();renderPricing();
+</script>
